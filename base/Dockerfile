@@ -7,7 +7,7 @@ ENV INIT_DAEMON_BASE_URI http://identifier/init-daemon
 ENV INIT_DAEMON_STEP spark_master_init
 
 ENV SPARK_VERSION=2.4.5
-ENV HADOOP_VERSION=2.7
+ENV HADOOP_VERSION=2.8
 
 COPY wait-for-step.sh /
 COPY execute-step.sh /
@@ -18,10 +18,30 @@ COPY finish-step.sh /
 RUN apk add --no-cache curl bash openjdk8-jre python3 py-pip nss libc6-compat \
       && ln -s /lib64/ld-linux-x86-64.so.2 /lib/ld-linux-x86-64.so.2 \
       && chmod +x *.sh \
-      && wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz \
-      && tar -xvzf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz \
-      && mv spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION} spark \
-      && rm spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz \
+      && wget https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-bin-without-hadoop-scala-2.12.tgz \
+      && tar -xvzf spark-${SPARK_VERSION}-bin-without-hadoop-scala-2.12.tgz \
+      && mv spark-${SPARK_VERSION}-bin-without-hadoop-scala-2.12 spark \
+      && rm spark-${SPARK_VERSION}-bin-without-hadoop-scala-2.12.tgz \
+      && wget https://archive.apache.org/dist/hadoop/common/hadoop-2.8.0/hadoop-2.8.0.tar.gz \
+      && tar -xvzf hadoop-2.8.0.tar.gz \
+      && mv hadoop-2.8.0 hadoop \
+      && export SPARK_DIST_CLASSPATH=$(/hadoop/bin/hadoop classpath) \
+      && rm hadoop-2.8.0.tar.gz \
+      && mv spark/jars/jackson-* / \
+      && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-scala_2.12/2.8.4/jackson-module-scala_2.12-2.8.4.jar \
+      && mv jackson-module-scala_2.12-2.8.4.jar spark/jars \
+      && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.8.4/jackson-databind-2.8.4.jar \
+      && mv jackson-databind-2.8.4.jar spark/jars \
+      && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.8.4/jackson-annotations-2.8.4.jar \
+      && mv jackson-annotations-2.8.4.jar spark/jars \
+      && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.8.4/jackson-core-2.8.4.jar \
+      && mv jackson-core-2.8.4.jar spark/jars \
+      && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-yaml/2.8.4/jackson-dataformat-yaml-2.8.4.jar \
+      && mv jackson-dataformat-yaml-2.8.4.jar spark/jars \
+      && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-jaxb-annotations/2.8.4/jackson-module-jaxb-annotations-2.8.4.jar \
+      && mv jackson-module-jaxb-annotations-2.8.4.jar spark/jars \
+      && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-paranamer/2.8.4/jackson-module-paranamer-2.8.4.jar \
+      && mv jackson-module-paranamer-2.8.4.jar spark/jars \
       #&& cd /css \
       #&& jar uf /spark/jars/spark-core_2.11-${SPARK_VERSION}.jar org/apache/spark/ui/static/timeline-view.css \
       && cd /

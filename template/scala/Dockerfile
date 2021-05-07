@@ -3,9 +3,9 @@ FROM bde2020/spark-submit:2.4.5-hadoop2.7
 LABEL maintainer="Gezim Sejdiu <g.sejdiu@gmail.com>, Giannis Mouchakis <gmouchakis@gmail.com>"
 
 ARG SBT_VERSION
-ENV SBT_VERSION=${SBT_VERSION:-1.2.6}
+ENV SBT_VERSION=${SBT_VERSION:-1.5.1}
 
-RUN wget -O - https://piccolo.link/sbt-1.2.6.tgz | gunzip | tar -x -C /usr/local
+RUN wget -O - https://github.com/sbt/sbt/releases/download/v1.5.1/sbt-1.5.1.tgz | gunzip | tar -x -C /usr/local
 
 ENV PATH /usr/local/sbt/bin:${PATH}
 

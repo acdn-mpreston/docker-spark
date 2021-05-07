@@ -1,4 +1,4 @@
-FROM bde2020/spark-base:2.4.5-hadoop2.7
+FROM gcr.io/npav-172917/spark-backfill-base:2.4.5-scala2.12
 
 LABEL maintainer="Gezim Sejdiu <g.sejdiu@gmail.com>, Giannis Mouchakis <gmouchakis@gmail.com>"
 
