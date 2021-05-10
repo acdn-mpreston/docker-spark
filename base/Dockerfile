@@ -12,6 +12,7 @@ ENV HADOOP_VERSION=2.8
 COPY wait-for-step.sh /
 COPY execute-step.sh /
 COPY finish-step.sh /
+COPY spark-ext/druid-spark-extensions-0.22.0-SNAPSHOT.jar /
 
 #COPY bde-spark.css /css/org/apache/spark/ui/static/timeline-view.css
 
@@ -42,9 +43,18 @@ RUN apk add --no-cache curl bash openjdk8-jre python3 py-pip nss libc6-compat \
       && mv jackson-module-jaxb-annotations-2.8.4.jar spark/jars \
       && wget https://repo1.maven.org/maven2/com/fasterxml/jackson/module/jackson-module-paranamer/2.8.4/jackson-module-paranamer-2.8.4.jar \
       && mv jackson-module-paranamer-2.8.4.jar spark/jars \
+      && wget https://mirror.its.dal.ca/apache//commons/dbcp/binaries/commons-dbcp2-2.8.0-bin.tar.gz \
+      && tar -xvzf commons-dbcp2-2.8.0-bin.tar.gz \
+      && mv commons-dbcp2-2.8.0/commons-dbcp2-2.8.0.jar spark/jars \
+      && wget https://muug.ca/mirror/apache-dist//commons/pool/binaries/commons-pool2-2.9.0-bin.tar.gz \
+      && tar -xvzf commons-pool2-2.9.0-bin.tar.gz \
+      && mv commons-pool2-2.9.0/commons-pool2-2.9.0.jar spark/jars \
       #&& cd /css \
       #&& jar uf /spark/jars/spark-core_2.11-${SPARK_VERSION}.jar org/apache/spark/ui/static/timeline-view.css \
       && cd /
+
+
+RUN mv /druid-spark-extensions-0.22.0-SNAPSHOT.jar /spark/jars
 
 #Give permission to execute scripts
 RUN chmod +x /wait-for-step.sh && chmod +x /execute-step.sh && chmod +x /finish-step.sh

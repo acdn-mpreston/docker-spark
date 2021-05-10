@@ -9,7 +9,7 @@ ENV SPARK_WORKER_LOG /spark/logs
 ENV SPARK_MASTER "spark://spark-master:7077"
 ENV JAVA_HOME "/usr/lib/jvm/default-jvm"
 ENV PATH "/spark/bin:/hadoop/bin:$JAVA_HOME:$PATH"
-RUN export SPARK_DIST_CLASSPATH=$(/hadoop/bin/hadoop classpath);echo $SPARK_DIST_CLASSPATH;  
+ENV SPARK_DIST_CLASSPATH="/hadoop/etc/hadoop:/hadoop/share/hadoop/common/lib/*:/hadoop/share/hadoop/common/*:/hadoop/share/hadoop/hdfs:/hadoop/share/hadoop/hdfs/lib/*:/hadoop/share/hadoop/hdfs/*:/hadoop/share/hadoop/yarn/lib/*:/hadoop/share/hadoop/yarn/*:/hadoop/share/hadoop/mapreduce/lib/*:/hadoop/share/hadoop/mapreduce/*:/contrib/capacity-scheduler/*.jar"
 
 EXPOSE 8081
 
