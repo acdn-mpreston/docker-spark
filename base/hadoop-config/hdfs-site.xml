@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<property>
+		<name>dfs.block.size</name>
+		<description>Increase block size for parquet</description>
+		<value>536870912</value>
+	</property>
+	<property>
+		<name>dfs.client.use.datanode.hostname</name>
+		<description>HDFS clients should use hostname to connect to datanodes</description>
+		<value>true</value>
+	</property>
+	<property>
+		<name>fs.s3n.awsAccessKeyId</name>
+		<description>Our S3 Access key</description>
+		<value>FQWJOPFQWNGFMLRIOUH7JDELAMARRE</value>
+	</property>
+	<property>
+		<name>fs.s3n.awsSecretAccessKey</name>
+		<description>Our s3 secret</description>
+		<value>GuMftbvmiK/Ijcbsadowa/bqwoPPSsdmgqoasJDELAMARREKEY</value>
+	</property>
+	<property>
+		<name>fs.s3a.access.key</name>
+		<description>Our S3 Access key</description>
+		<value>FQWJOPFQWNGFMLRIOUH7JDELAMARRE</value>
+	</property>
+	<property>
+		<name>fs.s3a.secret.key</name>
+		<description>Our s3 secret</description>
+		<value>GuMftbvmiK/Ijcbsadowa/bqwoPPSsdmgqoasJDELAMARREKEY</value>
+	</property>
+	<property>
+		<name>fs.s3a.endpoint</name>
+		<description>Our s3 endpoint</description>
+		<value>minio:9000</value>
+	</property>
+	<property>
+		<name>fs.s3a.connection.ssl.enabled</name>
+		<description>No https support for now</description>
+		<value>false</value>
+	</property>
+	<property>
+		<name>fs.s3a.path.style.access</name>
+		<description>Enable S3 path style access ie disabling the default virtual hosting behaviour.
+			Useful for S3A-compliant storage providers as it removes the need to set up DNS for virtual hosting.
+		</description>
+		<value>true</value>
+	</property>
+
+	<property>
+    	<name>fs.gs.auth.service.account.enable</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>fs.gs.auth.service.account.json.keyfile</name>
+        <value>/run/secrets/gcs_key</value>
+    </property>
+    <property>
+        <name>fs.gs.impl</name>
+        <value>com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystem</value>
+    </property>
+
+</configuration>

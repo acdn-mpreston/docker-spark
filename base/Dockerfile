@@ -13,6 +13,8 @@ COPY wait-for-step.sh /
 COPY execute-step.sh /
 COPY finish-step.sh /
 COPY spark-ext/druid-spark-extensions-0.22.0-SNAPSHOT.jar /
+COPY hadoop-config/hdfs-site.xml /
+COPY hadoop-config/jets3t.properties /
 
 #COPY bde-spark.css /css/org/apache/spark/ui/static/timeline-view.css
 
@@ -55,6 +57,9 @@ RUN apk add --no-cache curl bash openjdk8-jre python3 py-pip nss libc6-compat \
 
 
 RUN mv /druid-spark-extensions-0.22.0-SNAPSHOT.jar /spark/jars
+
+RUN mv /hdfs-site.xml /hadoop/etc/hadoop/
+RUN mv /jets3t.properties /hadoop/etc/hadoop/
 
 #Give permission to execute scripts
 RUN chmod +x /wait-for-step.sh && chmod +x /execute-step.sh && chmod +x /finish-step.sh
